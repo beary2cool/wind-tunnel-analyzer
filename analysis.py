@@ -65,3 +65,56 @@ def print_lift_summary(alpha, cl0=0.10, lift_slope=0.11):
 #     solve_alpha(...)
 #
 # This feature has not been implemented yet.
+
+def alpha_residual(alpha, target_cl, cl0=0.10, lift_slope=0.11):
+    """
+    Calculate the residual between the computed and target lift coefficient.
+
+    Parameters
+    ----------
+    alpha : float
+        Angle of attack in degrees.
+    target_cl : float
+        Target lift coefficient.
+    cl0 : float, optional
+        Lift coefficient at zero angle of attack.
+    lift_slope : float, optional
+        Lift curve slope in units of 1/degree.
+
+    Returns
+    -------
+    float
+        Difference between computed and target lift coefficient.
+    """
+
+    f(alpha) = cl0 + lift_slope * alpha - target_cl
+
+    return f(alpha)
+
+
+def solve_alpha(target_cl, cl0=0.10, lift_slope=0.11):
+    """
+    Solve for the angle of attack required to achieve a target lift coefficient.
+
+    Parameters
+    ----------
+    target_cl : float
+        Target lift coefficient.
+    cl0 : float, optional
+        Lift coefficient at zero angle of attack.
+    lift_slope : float, optional
+        Lift curve slope in units of 1/degree.
+
+    Returns
+    -------
+    float
+        Angle of attack in degrees.
+    """
+
+    alpha = fsolve(
+        alpha_residual,
+        0.0,
+        args=(target_cl, cl0, lift_slope)
+    )
+
+    return float(alpha[0])
