@@ -35,6 +35,13 @@ def main():
     # a target lift coefficient using solve_alpha(...).
     # Print the result to the console.
 
+        target_cl = 0.09
+
+    alpha = solve_alpha(target_cl, cl0=cl0, lift_slope=lift_slope)
+
+    print(f"\nTarget lift coefficient: {target_cl:.3f}")
+    print(f"Required angle of attack: {alpha:.2f} deg")
+
     plt.show()
 
 
